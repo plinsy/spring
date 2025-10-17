@@ -56,7 +56,8 @@ spring/
 │   │   │   ├── InstructorDashboardPage.tsx
 │   │   │   ├── CourseEditorPage.tsx
 │   │   │   ├── LessonPlayerPage.tsx
-│   │   │   └── AdminDashboardPage.tsx
+│   │   │   ├── AdminDashboardPage.tsx
+│   │   │   └── NotFoundPage.tsx
 │   │   ├── store/         # Zustand stores
 │   │   │   └── authStore.ts
 │   │   ├── lib/           # Utilities
@@ -321,6 +322,13 @@ spring/
 - Delete users and courses
 - Tabbed interface (Overview, Users, Courses)
 - Role-based access control (Admin only)
+
+**NotFoundPage** - 404 error page
+- User-friendly error message with 404 illustration
+- Helpful navigation suggestions
+- Quick action buttons (Home, Browse Courses, Go Back)
+- Contact support link
+- Gradient background with centered layout
 
 ## Development Workflow
 
