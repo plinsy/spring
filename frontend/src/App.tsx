@@ -14,6 +14,7 @@ import AdminDashboardPage from './pages/AdminDashboardPage'
 import NotFoundPage from './pages/NotFoundPage'
 import CertificatesPage from './pages/CertificatesPage'
 import AboutPage from './pages/AboutPage'
+import ContactPage from './pages/ContactPage'
 import { ROUTES } from './lib/urls'
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         <Route path="courses/:id" element={<CourseDetailPage />} />
         <Route path="courses/:courseId/lessons/:lessonId" element={<LessonPlayerPage />} />
         <Route path={ROUTES.ABOUT.substring(1)} element={<AboutPage />} />
+        <Route path={ROUTES.CONTACT.substring(1)} element={<ContactPage />} />
         <Route path={ROUTES.DASHBOARD.substring(1)} element={<DashboardPage />} />
         <Route path={ROUTES.PROFILE.substring(1)} element={<ProfilePage />} />
         <Route path={ROUTES.CERTIFICATES.substring(1)} element={<CertificatesPage />} />

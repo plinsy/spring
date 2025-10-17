@@ -59,7 +59,8 @@ spring/
 │   │   │   ├── AdminDashboardPage.tsx
 │   │   │   ├── NotFoundPage.tsx
 │   │   │   ├── CertificatesPage.tsx
-│   │   │   └── AboutPage.tsx
+│   │   │   ├── AboutPage.tsx
+│   │   │   └── ContactPage.tsx
 │   │   ├── store/         # Zustand stores
 │   │   │   └── authStore.ts
 │   │   ├── lib/           # Utilities
@@ -348,6 +349,15 @@ spring/
 - Platform statistics (students, instructors, courses, countries)
 - Why Choose SkillHub benefits section
 - Call-to-action to register or browse courses
+
+**ContactPage** - Contact form and support information
+- Contact form with categories (General, Technical, Billing, Course, etc.)
+- Contact information cards (Email, Phone, Address)
+- Support hours display
+- Success/error alerts
+- Additional support emails for specific departments
+- FAQ link
+- Responsive layout with form validation
 
 ## Development Workflow
 
