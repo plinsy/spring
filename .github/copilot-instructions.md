@@ -56,6 +56,7 @@ spring/
 │   │   │   ├── InstructorDashboardPage.tsx
 │   │   │   ├── CourseEditorPage.tsx
 │   │   │   ├── LessonPlayerPage.tsx
+│   │   │   ├── QuizPage.tsx
 │   │   │   ├── AdminDashboardPage.tsx
 │   │   │   ├── NotFoundPage.tsx
 │   │   │   ├── CertificatesPage.tsx
@@ -317,6 +318,20 @@ spring/
 - Mark lesson as complete
 - Auto-advance to next lesson
 
+**QuizPage** - Interactive quiz taking interface
+- Multiple question types (Multiple Choice, True/False, Short Answer)
+- Timer countdown with auto-submit on timeout
+- Question navigator showing answered/unanswered status
+- Progress bar and question counter
+- Answer selection with visual feedback
+- Submit validation (all questions must be answered)
+- Results page with score and pass/fail status
+- Detailed answer review with correct/incorrect indicators
+- Explanations for each question
+- Retry option with attempt tracking
+- Statistics display (correct, incorrect, total)
+- Responsive design with smooth transitions
+
 **AdminDashboardPage** - Admin platform management
 - Platform statistics (users, courses, enrollments, revenue)
 - User management with role filtering
@@ -398,6 +413,7 @@ spring/
 ✅ Student enrollment and progress tracking
 ✅ Lesson player with video support
 ✅ Progress tracking and lesson completion
+✅ Quiz taking functionality with timer and results
 ✅ User profile management
 ✅ Admin dashboard with user and course management
 ✅ Responsive UI with Tailwind CSS
@@ -407,10 +423,12 @@ spring/
 ✅ Empty states and error messages
 ✅ Certificate viewing page with download/share
 ✅ 404 Not Found page
+✅ About and Contact pages
 
 ## Features In Progress / Planned
 
-🔲 Quiz and assignment functionality
+🔲 Quiz creation interface (for instructors)
+🔲 Assignment functionality
 🔲 Certificate generation (backend)
 🔲 Review and rating system
 🔲 Payment integration

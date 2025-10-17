@@ -12,6 +12,7 @@ export const ROUTES = {
   COURSE_DETAIL: (id: number | string) => `/courses/${id}`,
   LESSON_PLAYER: (courseId: number | string, lessonId: number | string) => 
     `/courses/${courseId}/lessons/${lessonId}`,
+  QUIZ: (quizId: number | string) => `/quiz/${quizId}`,
   
   // Student routes
   DASHBOARD: '/dashboard',
@@ -132,6 +133,18 @@ export const API = {
     DETAIL: (id: number | string) => `/certificates/${id}`,
     GENERATE: (enrollmentId: number | string) => `/enrollments/${enrollmentId}/certificate`,
     VERIFY: (code: string) => `/certificates/verify/${code}`,
+  },
+
+  // Quiz endpoints
+  QUIZ: {
+    LIST: (lessonId: number | string) => `/lessons/${lessonId}/quizzes`,
+    GET_BY_ID: (quizId: number | string) => `/quizzes/${quizId}`,
+    CREATE: '/quizzes',
+    UPDATE: (id: number | string) => `/quizzes/${id}`,
+    DELETE: (id: number | string) => `/quizzes/${id}`,
+    SUBMIT: '/quizzes/submit',
+    ATTEMPT: (quizId: number | string) => `/quizzes/${quizId}/attempt`,
+    ATTEMPTS: (quizId: number | string) => `/quizzes/${quizId}/attempts`,
   },
 } as const
 

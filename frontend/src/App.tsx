@@ -15,6 +15,7 @@ import NotFoundPage from './pages/NotFoundPage'
 import CertificatesPage from './pages/CertificatesPage'
 import AboutPage from './pages/AboutPage'
 import ContactPage from './pages/ContactPage'
+import QuizPage from './pages/QuizPage'
 import { ROUTES } from './lib/urls'
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         <Route path={ROUTES.COURSES.substring(1)} element={<CoursesPage />} />
         <Route path="courses/:id" element={<CourseDetailPage />} />
         <Route path="courses/:courseId/lessons/:lessonId" element={<LessonPlayerPage />} />
+        <Route path="quiz/:quizId" element={<QuizPage />} />
         <Route path={ROUTES.ABOUT.substring(1)} element={<AboutPage />} />
         <Route path={ROUTES.CONTACT.substring(1)} element={<ContactPage />} />
         <Route path={ROUTES.DASHBOARD.substring(1)} element={<DashboardPage />} />
