@@ -10,6 +10,7 @@ import ProfilePage from './pages/ProfilePage'
 import InstructorDashboardPage from './pages/InstructorDashboardPage'
 import CourseEditorPage from './pages/CourseEditorPage'
 import LessonPlayerPage from './pages/LessonPlayerPage'
+import AdminDashboardPage from './pages/AdminDashboardPage'
 import { ROUTES } from './lib/urls'
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         <Route path={ROUTES.INSTRUCTOR.DASHBOARD.substring(1)} element={<InstructorDashboardPage />} />
         <Route path={ROUTES.INSTRUCTOR.COURSES.NEW.substring(1)} element={<CourseEditorPage />} />
         <Route path="instructor/courses/edit/:id" element={<CourseEditorPage />} />
+        <Route path={ROUTES.ADMIN.DASHBOARD.substring(1)} element={<AdminDashboardPage />} />
       </Route>
     </Routes>
   )

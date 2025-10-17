@@ -55,7 +55,8 @@ spring/
 │   │   │   ├── ProfilePage.tsx
 │   │   │   ├── InstructorDashboardPage.tsx
 │   │   │   ├── CourseEditorPage.tsx
-│   │   │   └── LessonPlayerPage.tsx
+│   │   │   ├── LessonPlayerPage.tsx
+│   │   │   └── AdminDashboardPage.tsx
 │   │   ├── store/         # Zustand stores
 │   │   │   └── authStore.ts
 │   │   ├── lib/           # Utilities
@@ -312,6 +313,15 @@ spring/
 - Mark lesson as complete
 - Auto-advance to next lesson
 
+**AdminDashboardPage** - Admin platform management
+- Platform statistics (users, courses, enrollments, revenue)
+- User management with role filtering
+- Course moderation with status filtering
+- Search functionality for users and courses
+- Delete users and courses
+- Tabbed interface (Overview, Users, Courses)
+- Role-based access control (Admin only)
+
 ## Development Workflow
 
 ### Running the Application
@@ -352,6 +362,7 @@ spring/
 ✅ Lesson player with video support
 ✅ Progress tracking and lesson completion
 ✅ User profile management
+✅ Admin dashboard with user and course management
 ✅ Responsive UI with Tailwind CSS
 ✅ Centralized routing system
 ✅ API error handling with interceptors
@@ -363,7 +374,6 @@ spring/
 🔲 Quiz and assignment functionality
 🔲 Certificate generation
 🔲 Review and rating system
-🔲 Admin dashboard
 🔲 Payment integration
 🔲 File upload for course materials
 🔲 Email notifications
