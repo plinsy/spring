@@ -94,6 +94,154 @@ public class CourseService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
+    public Page<CourseDto> getCourses(String search, Long categoryId, String levelStr,
+            Double minPrice, Double maxPrice, Boolean published, Pageable pageable) {
+        // Parse level if provided
+        final CourseLevel finalLevel;
+        if (levelStr != null && !levelStr.isEmpty()) {
+            try {
+                finalLevel = CourseLevel.valueOf(levelStr.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                throw new BadRequestException("Invalid level: " + levelStr);
+            }
+        } else {
+            finalLevel = null;
+        }
+
+        // Get all courses based on published status
+        List<Course> allCourses = published != null && published
+                ? courseRepository.findByIsPublished(true)
+                : courseRepository.findAll();
+
+        // Apply filters
+        List<Course> filtered = allCourses.stream()
+                .filter(course -> {
+                    // Search filter
+                    if (search != null && !search.isEmpty()) {
+                        String lowerSearch = search.toLowerCase();
+                        boolean matches = course.getTitle().toLowerCase().contains(lowerSearch) ||
+                                (course.getDescription() != null
+                                        && course.getDescription().toLowerCase().contains(lowerSearch));
+                        if (!matches)
+                            return false;
+                    }
+
+                    // Category filter
+                    if (categoryId != null) {
+                        boolean hasCategory = course.getCategories().stream()
+                                .anyMatch(cat -> cat.getId().equals(categoryId));
+                        if (!hasCategory)
+                            return false;
+                    }
+
+                    // Level filter
+                    if (finalLevel != null && !course.getLevel().equals(finalLevel)) {
+                        return false;
+                    }
+
+                    // Price filter
+                    if (minPrice != null && course.getPrice() < minPrice) {
+                        return false;
+                    }
+                    if (maxPrice != null && course.getPrice() > maxPrice) {
+                        return false;
+                    }
+
+                    return true;
+                })
+                .collect(Collectors.toList());
+
+        // Manual pagination
+        int start = (int) pageable.getOffset();
+        int end = Math.min(start + pageable.getPageSize(), filtered.size());
+
+        // Handle empty results or out of bounds
+        if (start >= filtered.size()) {
+            Page<Course> emptyPage = new org.springframework.data.domain.PageImpl<>(
+                    List.of(), pageable, filtered.size());
+            return emptyPage.map(this::convertToDto);
+        }
+
+        List<Course> paginatedList = filtered.subList(start, end);
+
+        Page<Course> courses = new org.springframework.data.domain.PageImpl<>(
+                paginatedList, pageable, filtered.size());
+
+        return courses.map(this::convertToDto);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<CourseDto> filterCourses(String keyword, Long categoryId, CourseLevel level,
+            Double minPrice, Double maxPrice, Pageable pageable) {
+        Page<Course> courses;
+
+        // If no filters, return all published courses
+        if (keyword == null && categoryId == null && level == null && minPrice == null && maxPrice == null) {
+            courses = courseRepository.findByIsPublished(true, pageable);
+        }
+        // If only keyword is provided
+        else if (keyword != null && categoryId == null && level == null && minPrice == null && maxPrice == null) {
+            courses = courseRepository.searchPublishedCourses(keyword, pageable);
+        }
+        // If only category is provided
+        else if (keyword == null && categoryId != null && level == null && minPrice == null && maxPrice == null) {
+            courses = courseRepository.findPublishedCoursesByCategory(categoryId, pageable);
+        }
+        // Complex filtering - need to filter in memory or use Specification
+        else {
+            List<Course> allCourses = courseRepository.findByIsPublished(true);
+
+            // Apply filters
+            List<Course> filtered = allCourses.stream()
+                    .filter(course -> {
+                        // Keyword filter
+                        if (keyword != null && !keyword.isEmpty()) {
+                            String lowerKeyword = keyword.toLowerCase();
+                            boolean matches = course.getTitle().toLowerCase().contains(lowerKeyword) ||
+                                    (course.getDescription() != null
+                                            && course.getDescription().toLowerCase().contains(lowerKeyword));
+                            if (!matches)
+                                return false;
+                        }
+
+                        // Category filter
+                        if (categoryId != null) {
+                            boolean hasCategory = course.getCategories().stream()
+                                    .anyMatch(cat -> cat.getId().equals(categoryId));
+                            if (!hasCategory)
+                                return false;
+                        }
+
+                        // Level filter
+                        if (level != null && !course.getLevel().equals(level)) {
+                            return false;
+                        }
+
+                        // Price filter
+                        if (minPrice != null && course.getPrice() < minPrice) {
+                            return false;
+                        }
+                        if (maxPrice != null && course.getPrice() > maxPrice) {
+                            return false;
+                        }
+
+                        return true;
+                    })
+                    .collect(Collectors.toList());
+
+            // Manual pagination
+            int start = (int) pageable.getOffset();
+            int end = Math.min(start + pageable.getPageSize(), filtered.size());
+            List<Course> paginatedList = filtered.subList(start, end);
+
+            courses = new org.springframework.data.domain.PageImpl<>(
+                    paginatedList, pageable, filtered.size());
+        }
+
+        return courses.map(this::convertToDto);
+    }
+
     @Transactional
     public CourseDto updateCourse(Long id, CreateCourseRequest request, User user) {
         Course course = courseRepository.findById(id)

@@ -46,17 +46,35 @@ public class CourseController {
     }
 
     @GetMapping
-    @Operation(summary = "Get all published courses", description = "Get all published courses with pagination")
-    public ResponseEntity<ApiResponse<Page<CourseDto>>> getAllPublishedCourses(
+    @Operation(summary = "Get courses with filters", description = "Get courses with optional filters (search, category, level, price, published)")
+    public ResponseEntity<Page<CourseDto>> getAllCourses(
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) Long categoryId,
+            @RequestParam(required = false) String level,
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice,
+            @RequestParam(required = false, defaultValue = "true") Boolean published,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "createdAt") String sortBy,
-            @RequestParam(defaultValue = "DESC") String sortDir) {
+            @RequestParam(required = false) String sort) {
 
-        Sort sort = sortDir.equalsIgnoreCase("ASC") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
-        Pageable pageable = PageRequest.of(page, size, sort);
-        Page<CourseDto> courses = courseService.getAllPublishedCourses(pageable);
-        return ResponseEntity.ok(ApiResponse.success(courses));
+        // Parse sort parameter (e.g., "createdAt,desc" or "title,asc")
+        Sort sorting = Sort.unsorted();
+        if (sort != null && !sort.isEmpty()) {
+            String[] sortParts = sort.split(",");
+            String sortBy = sortParts[0];
+            String sortDir = sortParts.length > 1 ? sortParts[1] : "asc";
+            sorting = sortDir.equalsIgnoreCase("desc")
+                    ? Sort.by(sortBy).descending()
+                    : Sort.by(sortBy).ascending();
+        } else {
+            sorting = Sort.by("createdAt").descending();
+        }
+
+        Pageable pageable = PageRequest.of(page, size, sorting);
+        Page<CourseDto> courses = courseService.getCourses(
+                search, categoryId, level, minPrice, maxPrice, published, pageable);
+        return ResponseEntity.ok(courses);
     }
 
     @GetMapping("/search")
