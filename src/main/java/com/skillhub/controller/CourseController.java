@@ -1,0 +1,133 @@
+package com.skillhub.controller;
+
+import com.skillhub.dto.ApiResponse;
+import com.skillhub.dto.CourseDto;
+import com.skillhub.dto.CreateCourseRequest;
+import com.skillhub.entity.User;
+import com.skillhub.service.CourseService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/courses")
+@RequiredArgsConstructor
+@Tag(name = "Courses", description = "Course management APIs")
+public class CourseController {
+
+    private final CourseService courseService;
+
+    @PostMapping
+    @SecurityRequirement(name = "bearer-jwt")
+    @Operation(summary = "Create course", description = "Create a new course (Instructor/Admin only)")
+    public ResponseEntity<ApiResponse<CourseDto>> createCourse(
+            @Valid @RequestBody CreateCourseRequest request,
+            @AuthenticationPrincipal User instructor) {
+        CourseDto course = courseService.createCourse(request, instructor);
+        return ResponseEntity.ok(ApiResponse.success("Course created successfully", course));
+    }
+
+    @GetMapping("/{id}")
+    @Operation(summary = "Get course by ID", description = "Get course details by ID")
+    public ResponseEntity<ApiResponse<CourseDto>> getCourseById(@PathVariable Long id) {
+        CourseDto course = courseService.getCourseById(id);
+        return ResponseEntity.ok(ApiResponse.success(course));
+    }
+
+    @GetMapping
+    @Operation(summary = "Get all published courses", description = "Get all published courses with pagination")
+    public ResponseEntity<ApiResponse<Page<CourseDto>>> getAllPublishedCourses(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "createdAt") String sortBy,
+            @RequestParam(defaultValue = "DESC") String sortDir) {
+
+        Sort sort = sortDir.equalsIgnoreCase("ASC") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<CourseDto> courses = courseService.getAllPublishedCourses(pageable);
+        return ResponseEntity.ok(ApiResponse.success(courses));
+    }
+
+    @GetMapping("/search")
+    @Operation(summary = "Search courses", description = "Search courses by keyword")
+    public ResponseEntity<ApiResponse<Page<CourseDto>>> searchCourses(
+            @RequestParam String keyword,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<CourseDto> courses = courseService.searchCourses(keyword, pageable);
+        return ResponseEntity.ok(ApiResponse.success(courses));
+    }
+
+    @GetMapping("/category/{categoryId}")
+    @Operation(summary = "Get courses by category", description = "Get all courses in a specific category")
+    public ResponseEntity<ApiResponse<Page<CourseDto>>> getCoursesByCategory(
+            @PathVariable Long categoryId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<CourseDto> courses = courseService.getCoursesByCategory(categoryId, pageable);
+        return ResponseEntity.ok(ApiResponse.success(courses));
+    }
+
+    @GetMapping("/instructor/{instructorId}")
+    @Operation(summary = "Get instructor courses", description = "Get all courses created by an instructor")
+    public ResponseEntity<ApiResponse<List<CourseDto>>> getInstructorCourses(@PathVariable Long instructorId) {
+        List<CourseDto> courses = courseService.getInstructorCourses(instructorId);
+        return ResponseEntity.ok(ApiResponse.success(courses));
+    }
+
+    @PutMapping("/{id}")
+    @SecurityRequirement(name = "bearer-jwt")
+    @Operation(summary = "Update course", description = "Update course details (Owner/Admin only)")
+    public ResponseEntity<ApiResponse<CourseDto>> updateCourse(
+            @PathVariable Long id,
+            @Valid @RequestBody CreateCourseRequest request,
+            @AuthenticationPrincipal User user) {
+        CourseDto course = courseService.updateCourse(id, request, user);
+        return ResponseEntity.ok(ApiResponse.success("Course updated successfully", course));
+    }
+
+    @PutMapping("/{id}/publish")
+    @SecurityRequirement(name = "bearer-jwt")
+    @Operation(summary = "Publish course", description = "Publish a course (Owner/Admin only)")
+    public ResponseEntity<ApiResponse<CourseDto>> publishCourse(
+            @PathVariable Long id,
+            @AuthenticationPrincipal User user) {
+        CourseDto course = courseService.publishCourse(id, user);
+        return ResponseEntity.ok(ApiResponse.success("Course published successfully", course));
+    }
+
+    @PutMapping("/{id}/unpublish")
+    @SecurityRequirement(name = "bearer-jwt")
+    @Operation(summary = "Unpublish course", description = "Unpublish a course (Owner/Admin only)")
+    public ResponseEntity<ApiResponse<CourseDto>> unpublishCourse(
+            @PathVariable Long id,
+            @AuthenticationPrincipal User user) {
+        CourseDto course = courseService.unpublishCourse(id, user);
+        return ResponseEntity.ok(ApiResponse.success("Course unpublished successfully", course));
+    }
+
+    @DeleteMapping("/{id}")
+    @SecurityRequirement(name = "bearer-jwt")
+    @Operation(summary = "Delete course", description = "Delete a course (Owner/Admin only)")
+    public ResponseEntity<ApiResponse<Void>> deleteCourse(
+            @PathVariable Long id,
+            @AuthenticationPrincipal User user) {
+        courseService.deleteCourse(id, user);
+        return ResponseEntity.ok(ApiResponse.success("Course deleted successfully", null));
+    }
+}

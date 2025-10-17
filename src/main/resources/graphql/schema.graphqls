@@ -1,0 +1,264 @@
+# GraphQL Schema for SkillHub
+
+# Scalars
+scalar DateTime
+
+# Enums
+enum Role {
+    STUDENT
+    INSTRUCTOR
+    ADMIN
+}
+
+enum CourseLevel {
+    BEGINNER
+    INTERMEDIATE
+    ADVANCED
+    EXPERT
+}
+
+enum LessonType {
+    VIDEO
+    TEXT
+    QUIZ
+    ASSIGNMENT
+    RESOURCE
+}
+
+# Types
+type User {
+    id: ID!
+    username: String!
+    email: String!
+    firstName: String!
+    lastName: String!
+    fullName: String!
+    role: Role!
+    isActive: Boolean!
+    bio: String
+    profilePictureUrl: String
+    createdAt: DateTime!
+    coursesCreated: [Course!]
+    enrollments: [Enrollment!]
+}
+
+type Category {
+    id: ID!
+    name: String!
+    description: String
+    iconUrl: String
+    courses: [Course!]
+    createdAt: DateTime!
+}
+
+type Course {
+    id: ID!
+    title: String!
+    description: String!
+    thumbnailUrl: String
+    level: CourseLevel!
+    isPublished: Boolean!
+    price: Float!
+    instructor: User!
+    categories: [Category!]
+    modules: [Module!]
+    averageRating: Float
+    totalEnrollments: Int!
+    totalLessons: Int!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+}
+
+type Module {
+    id: ID!
+    title: String!
+    description: String
+    orderIndex: Int!
+    course: Course!
+    lessons: [Lesson!]
+    createdAt: DateTime!
+}
+
+type Lesson {
+    id: ID!
+    title: String!
+    content: String
+    type: LessonType!
+    videoUrl: String
+    durationMinutes: Int
+    orderIndex: Int!
+    isFree: Boolean!
+    module: Module!
+    createdAt: DateTime!
+}
+
+type Enrollment {
+    id: ID!
+    student: User!
+    course: Course!
+    enrolledAt: DateTime!
+    completedAt: DateTime
+    progressPercentage: Float!
+    isCompleted: Boolean!
+}
+
+type Review {
+    id: ID!
+    user: User!
+    course: Course!
+    rating: Int!
+    comment: String
+    isApproved: Boolean!
+    createdAt: DateTime!
+}
+
+type Comment {
+    id: ID!
+    user: User!
+    lesson: Lesson!
+    content: String!
+    parent: Comment
+    replies: [Comment!]
+    isEdited: Boolean!
+    createdAt: DateTime!
+}
+
+# Input Types
+input CreateCourseInput {
+    title: String!
+    description: String!
+    thumbnailUrl: String
+    level: CourseLevel!
+    price: Float
+    categoryIds: [ID!]
+}
+
+input UpdateCourseInput {
+    title: String
+    description: String
+    thumbnailUrl: String
+    level: CourseLevel
+    price: Float
+    categoryIds: [ID!]
+}
+
+input CreateModuleInput {
+    title: String!
+    description: String
+    orderIndex: Int!
+    courseId: ID!
+}
+
+input CreateLessonInput {
+    title: String!
+    content: String
+    type: LessonType!
+    videoUrl: String
+    durationMinutes: Int
+    orderIndex: Int!
+    isFree: Boolean!
+    moduleId: ID!
+}
+
+input EnrollInput {
+    courseId: ID!
+}
+
+input CreateReviewInput {
+    courseId: ID!
+    rating: Int!
+    comment: String
+}
+
+input CreateCommentInput {
+    lessonId: ID!
+    content: String!
+    parentId: ID
+}
+
+# Pagination
+type PageInfo {
+    hasNextPage: Boolean!
+    hasPreviousPage: Boolean!
+    totalPages: Int!
+    totalElements: Int!
+}
+
+type CoursePage {
+    content: [Course!]!
+    pageInfo: PageInfo!
+}
+
+# Queries
+type Query {
+    # User queries
+    me: User
+    user(id: ID!): User
+    users(role: Role): [User!]!
+    
+    # Course queries
+    course(id: ID!): Course
+    courses(page: Int = 0, size: Int = 10): CoursePage!
+    publishedCourses(page: Int = 0, size: Int = 10): CoursePage!
+    searchCourses(keyword: String!, page: Int = 0, size: Int = 10): CoursePage!
+    coursesByCategory(categoryId: ID!, page: Int = 0, size: Int = 10): CoursePage!
+    instructorCourses(instructorId: ID!): [Course!]!
+    myCourses: [Course!]!
+    
+    # Category queries
+    category(id: ID!): Category
+    categories: [Category!]!
+    
+    # Module queries
+    module(id: ID!): Module
+    courseModules(courseId: ID!): [Module!]!
+    
+    # Lesson queries
+    lesson(id: ID!): Lesson
+    moduleLessons(moduleId: ID!): [Lesson!]!
+    
+    # Enrollment queries
+    enrollment(id: ID!): Enrollment
+    myEnrollments: [Enrollment!]!
+    courseEnrollments(courseId: ID!): [Enrollment!]!
+    
+    # Review queries
+    courseReviews(courseId: ID!): [Review!]!
+    
+    # Comment queries
+    lessonComments(lessonId: ID!): [Comment!]!
+}
+
+# Mutations
+type Mutation {
+    # Course mutations
+    createCourse(input: CreateCourseInput!): Course!
+    updateCourse(id: ID!, input: UpdateCourseInput!): Course!
+    publishCourse(id: ID!): Course!
+    unpublishCourse(id: ID!): Course!
+    deleteCourse(id: ID!): Boolean!
+    
+    # Module mutations
+    createModule(input: CreateModuleInput!): Module!
+    updateModule(id: ID!, input: CreateModuleInput!): Module!
+    deleteModule(id: ID!): Boolean!
+    
+    # Lesson mutations
+    createLesson(input: CreateLessonInput!): Lesson!
+    updateLesson(id: ID!, input: CreateLessonInput!): Lesson!
+    deleteLesson(id: ID!): Boolean!
+    
+    # Enrollment mutations
+    enroll(input: EnrollInput!): Enrollment!
+    markLessonComplete(lessonId: ID!): Boolean!
+    
+    # Review mutations
+    createReview(input: CreateReviewInput!): Review!
+    updateReview(id: ID!, rating: Int!, comment: String): Review!
+    deleteReview(id: ID!): Boolean!
+    
+    # Comment mutations
+    createComment(input: CreateCommentInput!): Comment!
+    updateComment(id: ID!, content: String!): Comment!
+    deleteComment(id: ID!): Boolean!
+}
