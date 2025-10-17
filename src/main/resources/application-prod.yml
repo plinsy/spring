@@ -1,0 +1,14 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+  
+  thymeleaf:
+    cache: true
+
+logging:
+  level:
+    com.skillhub: INFO
+    org.springframework.security: INFO
+    org.springframework.web: WARN
