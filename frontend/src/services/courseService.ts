@@ -29,6 +29,8 @@ export const courseApi = {
     if (filters.sort) params.append('sort', filters.sort)
     
     const response = await api.get<PaginatedResponse<Course>>(`/courses?${params.toString()}`)
+    console.log('response.data:', response.data);
+    
     return response.data
   },
 

@@ -54,7 +54,7 @@ export default function CourseCard({ course }: CourseCardProps) {
       <div className="p-4">
         {/* Category */}
         <div className="text-sm text-blue-600 font-medium mb-2">
-          {course.categories[0].name}
+          {course.categories[0]?.name}
         </div>
 
         {/* Title */}
