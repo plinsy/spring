@@ -163,7 +163,7 @@ export default function InstructorDashboardPage() {
             <p className="mt-2 text-gray-600">Manage your courses and track your performance</p>
           </div>
           <Link
-            to="/courses/create"
+            to="/instructor/courses/new"
             className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-md"
           >
             <Plus className="h-5 w-5" />
@@ -434,7 +434,7 @@ export default function InstructorDashboardPage() {
                             <Eye className="h-5 w-5" />
                           </Link>
                           <Link
-                            to={`/courses/${course.id}/edit`}
+                            to={`/instructor/courses/edit/${course.id}`}
                             className="p-2 text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
                             title="Edit Course"
                           >

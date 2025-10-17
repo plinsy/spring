@@ -8,6 +8,7 @@ import CourseDetailPage from './pages/CourseDetailPage'
 import DashboardPage from './pages/DashboardPage'
 import ProfilePage from './pages/ProfilePage'
 import InstructorDashboardPage from './pages/InstructorDashboardPage'
+import CourseEditorPage from './pages/CourseEditorPage'
 
 function App() {
   return (
@@ -21,6 +22,8 @@ function App() {
         <Route path="dashboard" element={<DashboardPage />} />
         <Route path="profile" element={<ProfilePage />} />
         <Route path="instructor/dashboard" element={<InstructorDashboardPage />} />
+        <Route path="instructor/courses/new" element={<CourseEditorPage />} />
+        <Route path="instructor/courses/edit/:id" element={<CourseEditorPage />} />
       </Route>
     </Routes>
   )
