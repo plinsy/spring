@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { BookOpen, Users, Award, TrendingUp } from 'lucide-react'
+import { BookOpen, Users, Award } from 'lucide-react'
 
 export default function HomePage() {
   return (
