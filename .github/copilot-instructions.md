@@ -58,7 +58,8 @@ spring/
 │   │   │   ├── LessonPlayerPage.tsx
 │   │   │   ├── AdminDashboardPage.tsx
 │   │   │   ├── NotFoundPage.tsx
-│   │   │   └── CertificatesPage.tsx
+│   │   │   ├── CertificatesPage.tsx
+│   │   │   └── AboutPage.tsx
 │   │   ├── store/         # Zustand stores
 │   │   │   └── authStore.ts
 │   │   ├── lib/           # Utilities
@@ -339,6 +340,14 @@ spring/
 - Certificate verification codes
 - Empty state with call-to-action to browse courses
 - Student-only page
+
+**AboutPage** - Company information and mission
+- Hero section with mission statement
+- Mission and vision cards
+- Six core values with icons (Student-Centered, Quality, Innovation, Community, Accessibility, Lifelong Learning)
+- Platform statistics (students, instructors, courses, countries)
+- Why Choose SkillHub benefits section
+- Call-to-action to register or browse courses
 
 ## Development Workflow
 

@@ -22,6 +22,12 @@ export default function Navbar() {
                 <BookOpen className="w-4 h-4 mr-2" />
                 Courses
               </Link>
+              <Link
+                to={ROUTES.ABOUT}
+                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 hover:text-primary-600"
+              >
+                About
+              </Link>
             </div>
           </div>
 
