@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import api from '../lib/axios'
 
 interface User {
   id: number
@@ -10,11 +11,28 @@ interface User {
   role: 'STUDENT' | 'INSTRUCTOR' | 'ADMIN'
 }
 
+interface AuthResponse {
+  data: {
+    user: User
+    accessToken: string
+  }
+}
+
+interface RegisterRequest {
+  firstName: string
+  lastName: string
+  username: string
+  email: string
+  password: string
+  role: 'STUDENT' | 'INSTRUCTOR'
+}
+
 interface AuthState {
   user: User | null
   accessToken: string | null
   isAuthenticated: boolean
-  login: (user: User, token: string) => void
+  login: (email: string, password: string) => Promise<void>
+  register: (data: RegisterRequest) => Promise<void>
   logout: () => void
 }
 
@@ -24,9 +42,17 @@ export const useAuthStore = create<AuthState>()(
       user: null,
       accessToken: null,
       isAuthenticated: false,
-      login: (user, token) => {
-        localStorage.setItem('accessToken', token)
-        set({ user, accessToken: token, isAuthenticated: true })
+      login: async (emailOrUsername: string, password: string) => {
+        const response = await api.post<AuthResponse>('/auth/login', { emailOrUsername, password })
+        const { user, accessToken } = response.data.data
+        localStorage.setItem('accessToken', accessToken)
+        set({ user, accessToken, isAuthenticated: true })
+      },
+      register: async (data: RegisterRequest) => {
+        const response = await api.post<AuthResponse>('/auth/register', data)
+        const { user, accessToken } = response.data.data
+        localStorage.setItem('accessToken', accessToken)
+        set({ user, accessToken, isAuthenticated: true })
       },
       logout: () => {
         localStorage.removeItem('accessToken')
