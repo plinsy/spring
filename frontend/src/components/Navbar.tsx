@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
-import { LogOut, User, BookOpen } from 'lucide-react'
+import { LogOut, User, BookOpen, Award } from 'lucide-react'
 import { ROUTES, getDashboardRoute } from '../lib/urls'
 
 export default function Navbar() {
@@ -41,6 +41,15 @@ export default function Navbar() {
                 >
                   {user?.firstName}
                 </Link>
+                {user?.role === 'STUDENT' && (
+                  <Link
+                    to={ROUTES.CERTIFICATES}
+                    className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary-600"
+                  >
+                    <Award className="w-4 h-4 mr-2" />
+                    Certificates
+                  </Link>
+                )}
                 <button
                   onClick={logout}
                   className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-red-600"

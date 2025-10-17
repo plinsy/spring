@@ -12,6 +12,7 @@ import CourseEditorPage from './pages/CourseEditorPage'
 import LessonPlayerPage from './pages/LessonPlayerPage'
 import AdminDashboardPage from './pages/AdminDashboardPage'
 import NotFoundPage from './pages/NotFoundPage'
+import CertificatesPage from './pages/CertificatesPage'
 import { ROUTES } from './lib/urls'
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path="courses/:courseId/lessons/:lessonId" element={<LessonPlayerPage />} />
         <Route path={ROUTES.DASHBOARD.substring(1)} element={<DashboardPage />} />
         <Route path={ROUTES.PROFILE.substring(1)} element={<ProfilePage />} />
+        <Route path={ROUTES.CERTIFICATES.substring(1)} element={<CertificatesPage />} />
         <Route path={ROUTES.INSTRUCTOR.DASHBOARD.substring(1)} element={<InstructorDashboardPage />} />
         <Route path={ROUTES.INSTRUCTOR.COURSES.NEW.substring(1)} element={<CourseEditorPage />} />
         <Route path="instructor/courses/edit/:id" element={<CourseEditorPage />} />

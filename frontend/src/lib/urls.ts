@@ -16,6 +16,7 @@ export const ROUTES = {
   // Student routes
   DASHBOARD: '/dashboard',
   PROFILE: '/profile',
+  CERTIFICATES: '/certificates',
   
   // Instructor routes
   INSTRUCTOR: {
@@ -127,8 +128,10 @@ export const API = {
   // Certificate endpoints
   CERTIFICATES: {
     LIST: '/certificates',
+    MY: '/certificates/my',
     DETAIL: (id: number | string) => `/certificates/${id}`,
     GENERATE: (enrollmentId: number | string) => `/enrollments/${enrollmentId}/certificate`,
+    VERIFY: (code: string) => `/certificates/verify/${code}`,
   },
 } as const
 

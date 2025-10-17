@@ -57,7 +57,8 @@ spring/
 │   │   │   ├── CourseEditorPage.tsx
 │   │   │   ├── LessonPlayerPage.tsx
 │   │   │   ├── AdminDashboardPage.tsx
-│   │   │   └── NotFoundPage.tsx
+│   │   │   ├── NotFoundPage.tsx
+│   │   │   └── CertificatesPage.tsx
 │   │   ├── store/         # Zustand stores
 │   │   │   └── authStore.ts
 │   │   ├── lib/           # Utilities
@@ -330,6 +331,15 @@ spring/
 - Contact support link
 - Gradient background with centered layout
 
+**CertificatesPage** - View earned certificates
+- Display all earned certificates with stats
+- Certificate cards with course info and issue date
+- Download, share, and print functionality
+- Certificate preview modal with full design
+- Certificate verification codes
+- Empty state with call-to-action to browse courses
+- Student-only page
+
 ## Development Workflow
 
 ### Running the Application
@@ -376,11 +386,13 @@ spring/
 ✅ API error handling with interceptors
 ✅ Form validation and loading states
 ✅ Empty states and error messages
+✅ Certificate viewing page with download/share
+✅ 404 Not Found page
 
 ## Features In Progress / Planned
 
 🔲 Quiz and assignment functionality
-🔲 Certificate generation
+🔲 Certificate generation (backend)
 🔲 Review and rating system
 🔲 Payment integration
 🔲 File upload for course materials
