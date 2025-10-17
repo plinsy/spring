@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
 import { Alert, AlertDescription } from '../components/ui/alert'
 import { AlertCircle, Eye, EyeOff, Loader2, Check } from 'lucide-react'
+import { ROUTES } from '../lib/urls'
 
 export default function RegisterPage() {
   const navigate = useNavigate()
@@ -48,7 +49,7 @@ export default function RegisterPage() {
         password: formData.password,
         role: formData.role,
       })
-      navigate('/')
+      navigate(ROUTES.HOME)
     } catch (err: any) {
       setError(err.response?.data?.message || 'Registration failed. Please try again.')
     } finally {
@@ -319,7 +320,7 @@ export default function RegisterPage() {
         {/* Sign In Link */}
         <p className="text-center mt-6 text-sm text-gray-600">
           Already have an account?{' '}
-          <Link to="/login" className="font-medium text-purple-600 hover:text-purple-500">
+          <Link to={ROUTES.LOGIN} className="font-medium text-purple-600 hover:text-purple-500">
             Sign in
           </Link>
         </p>

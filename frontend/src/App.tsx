@@ -9,20 +9,21 @@ import DashboardPage from './pages/DashboardPage'
 import ProfilePage from './pages/ProfilePage'
 import InstructorDashboardPage from './pages/InstructorDashboardPage'
 import CourseEditorPage from './pages/CourseEditorPage'
+import { ROUTES } from './lib/urls'
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
+      <Route path={ROUTES.HOME} element={<Layout />}>
         <Route index element={<HomePage />} />
-        <Route path="login" element={<LoginPage />} />
-        <Route path="register" element={<RegisterPage />} />
-        <Route path="courses" element={<CoursesPage />} />
+        <Route path={ROUTES.LOGIN.substring(1)} element={<LoginPage />} />
+        <Route path={ROUTES.REGISTER.substring(1)} element={<RegisterPage />} />
+        <Route path={ROUTES.COURSES.substring(1)} element={<CoursesPage />} />
         <Route path="courses/:id" element={<CourseDetailPage />} />
-        <Route path="dashboard" element={<DashboardPage />} />
-        <Route path="profile" element={<ProfilePage />} />
-        <Route path="instructor/dashboard" element={<InstructorDashboardPage />} />
-        <Route path="instructor/courses/new" element={<CourseEditorPage />} />
+        <Route path={ROUTES.DASHBOARD.substring(1)} element={<DashboardPage />} />
+        <Route path={ROUTES.PROFILE.substring(1)} element={<ProfilePage />} />
+        <Route path={ROUTES.INSTRUCTOR.DASHBOARD.substring(1)} element={<InstructorDashboardPage />} />
+        <Route path={ROUTES.INSTRUCTOR.COURSES.NEW.substring(1)} element={<CourseEditorPage />} />
         <Route path="instructor/courses/edit/:id" element={<CourseEditorPage />} />
       </Route>
     </Routes>

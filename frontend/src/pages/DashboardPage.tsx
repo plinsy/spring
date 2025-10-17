@@ -13,6 +13,7 @@ import {
   Zap
 } from 'lucide-react'
 import api from '../lib/axios'
+import { ROUTES } from '../lib/urls'
 
 interface EnrolledCourse {
   id: number
@@ -50,7 +51,7 @@ export default function DashboardPage() {
 
   // Redirect instructors to their dashboard
   if (user?.role === 'INSTRUCTOR') {
-    return <Navigate to="/instructor/dashboard" replace />
+    return <Navigate to={ROUTES.INSTRUCTOR.DASHBOARD} replace />
   }
 
   useEffect(() => {

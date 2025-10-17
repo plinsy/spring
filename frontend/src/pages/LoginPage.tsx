@@ -3,6 +3,7 @@ import { useNavigate, Link, useLocation } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
 import { Alert, AlertDescription } from '../components/ui/alert'
 import { AlertCircle, Eye, EyeOff, Loader2 } from 'lucide-react'
+import { ROUTES } from '../lib/urls'
 
 export default function LoginPage() {
   const navigate = useNavigate()
@@ -17,7 +18,7 @@ export default function LoginPage() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const from = (location.state as any)?.from?.pathname || '/'
+  const from = (location.state as any)?.from?.pathname || ROUTES.HOME
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -233,7 +234,7 @@ export default function LoginPage() {
         {/* Sign Up Link */}
         <p className="text-center mt-6 text-sm text-gray-600">
           Don't have an account?{' '}
-          <Link to="/register" className="font-medium text-blue-600 hover:text-blue-500">
+          <Link to={ROUTES.REGISTER} className="font-medium text-blue-600 hover:text-blue-500">
             Sign up for free
           </Link>
         </p>

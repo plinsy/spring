@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
+import { ROUTES } from '../lib/urls'
 import {
   ArrowLeft,
   Save,
@@ -179,7 +180,7 @@ export default function CourseEditorPage() {
       setSuccess(isEditMode ? 'Course updated successfully!' : 'Course created successfully!')
       
       setTimeout(() => {
-        navigate('/instructor/dashboard')
+        navigate(ROUTES.INSTRUCTOR.DASHBOARD)
       }, 1500)
       
     } catch (err: any) {
@@ -293,7 +294,7 @@ export default function CourseEditorPage() {
         {/* Header */}
         <div className="mb-6">
           <button
-            onClick={() => navigate('/instructor/dashboard')}
+            onClick={() => navigate(ROUTES.INSTRUCTOR.DASHBOARD)}
             className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4"
           >
             <ArrowLeft className="h-5 w-5" />
@@ -664,7 +665,7 @@ export default function CourseEditorPage() {
         {/* Save Button (Bottom) */}
         <div className="mt-6 flex justify-end gap-3">
           <button
-            onClick={() => navigate('/instructor/dashboard')}
+            onClick={() => navigate(ROUTES.INSTRUCTOR.DASHBOARD)}
             className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
           >
             Cancel
