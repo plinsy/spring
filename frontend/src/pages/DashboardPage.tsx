@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
 import { 
   BookOpen, 
@@ -47,6 +47,11 @@ export default function DashboardPage() {
     totalLearningHours: 0,
   })
   const [loading, setLoading] = useState(true)
+
+  // Redirect instructors to their dashboard
+  if (user?.role === 'INSTRUCTOR') {
+    return <Navigate to="/instructor/dashboard" replace />
+  }
 
   useEffect(() => {
     fetchDashboardData()

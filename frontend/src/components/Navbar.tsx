@@ -28,10 +28,16 @@ export default function Navbar() {
             {isAuthenticated ? (
               <>
                 <Link
-                  to="/dashboard"
+                  to={user?.role === 'INSTRUCTOR' ? '/instructor/dashboard' : '/dashboard'}
                   className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary-600"
                 >
                   <User className="w-4 h-4 mr-2" />
+                  Dashboard
+                </Link>
+                <Link
+                  to="/profile"
+                  className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary-600"
+                >
                   {user?.firstName}
                 </Link>
                 <button

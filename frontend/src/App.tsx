@@ -7,6 +7,7 @@ import CoursesPage from './pages/CoursesPage'
 import CourseDetailPage from './pages/CourseDetailPage'
 import DashboardPage from './pages/DashboardPage'
 import ProfilePage from './pages/ProfilePage'
+import InstructorDashboardPage from './pages/InstructorDashboardPage'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="courses/:id" element={<CourseDetailPage />} />
         <Route path="dashboard" element={<DashboardPage />} />
         <Route path="profile" element={<ProfilePage />} />
+        <Route path="instructor/dashboard" element={<InstructorDashboardPage />} />
       </Route>
     </Routes>
   )
