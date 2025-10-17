@@ -10,6 +10,8 @@ export const ROUTES = {
   REGISTER: '/register',
   COURSES: '/courses',
   COURSE_DETAIL: (id: number | string) => `/courses/${id}`,
+  LESSON_PLAYER: (courseId: number | string, lessonId: number | string) => 
+    `/courses/${courseId}/lessons/${lessonId}`,
   
   // Student routes
   DASHBOARD: '/dashboard',

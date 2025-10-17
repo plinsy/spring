@@ -54,7 +54,8 @@ spring/
 │   │   │   ├── DashboardPage.tsx (Student)
 │   │   │   ├── ProfilePage.tsx
 │   │   │   ├── InstructorDashboardPage.tsx
-│   │   │   └── CourseEditorPage.tsx
+│   │   │   ├── CourseEditorPage.tsx
+│   │   │   └── LessonPlayerPage.tsx
 │   │   ├── store/         # Zustand stores
 │   │   │   └── authStore.ts
 │   │   ├── lib/           # Utilities
@@ -234,6 +235,7 @@ spring/
 - `ROUTES.INSTRUCTOR.DASHBOARD` → `/instructor/dashboard`
 - `ROUTES.INSTRUCTOR.COURSES.NEW` → `/instructor/courses/new`
 - `ROUTES.INSTRUCTOR.COURSES.EDIT(id)` → `/instructor/courses/edit/{id}`
+- `ROUTES.LESSON_PLAYER(courseId, lessonId)` → `/courses/{courseId}/lessons/{lessonId}`
 
 **Helper Functions**
 - `getDashboardRoute(role)` - Returns appropriate dashboard based on user role
@@ -300,6 +302,16 @@ spring/
 - Multiple lesson types (VIDEO, TEXT, QUIZ, etc.)
 - Free preview toggle for lessons
 
+**LessonPlayerPage** - Video/content player for lessons
+- Video player with controls (YouTube/Vimeo support)
+- Lesson content display
+- Progress tracking and completion
+- Next/Previous lesson navigation
+- Sidebar with course curriculum
+- Discussion section
+- Mark lesson as complete
+- Auto-advance to next lesson
+
 ## Development Workflow
 
 ### Running the Application
@@ -337,6 +349,8 @@ spring/
 ✅ Course creation and management
 ✅ Module and lesson structure
 ✅ Student enrollment and progress tracking
+✅ Lesson player with video support
+✅ Progress tracking and lesson completion
 ✅ User profile management
 ✅ Responsive UI with Tailwind CSS
 ✅ Centralized routing system
@@ -346,7 +360,6 @@ spring/
 
 ## Features In Progress / Planned
 
-🔲 Lesson player page (video playback)
 🔲 Quiz and assignment functionality
 🔲 Certificate generation
 🔲 Review and rating system

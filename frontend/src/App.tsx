@@ -9,6 +9,7 @@ import DashboardPage from './pages/DashboardPage'
 import ProfilePage from './pages/ProfilePage'
 import InstructorDashboardPage from './pages/InstructorDashboardPage'
 import CourseEditorPage from './pages/CourseEditorPage'
+import LessonPlayerPage from './pages/LessonPlayerPage'
 import { ROUTES } from './lib/urls'
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path={ROUTES.REGISTER.substring(1)} element={<RegisterPage />} />
         <Route path={ROUTES.COURSES.substring(1)} element={<CoursesPage />} />
         <Route path="courses/:id" element={<CourseDetailPage />} />
+        <Route path="courses/:courseId/lessons/:lessonId" element={<LessonPlayerPage />} />
         <Route path={ROUTES.DASHBOARD.substring(1)} element={<DashboardPage />} />
         <Route path={ROUTES.PROFILE.substring(1)} element={<ProfilePage />} />
         <Route path={ROUTES.INSTRUCTOR.DASHBOARD.substring(1)} element={<InstructorDashboardPage />} />
