@@ -1,10 +1,10 @@
 import api from '../lib/axios'
-import type { Course, Category, PaginatedResponse } from '../types'
+import type { Course, Category, PaginatedResponse, Module, Review, ApiResponse } from '../types'
 
 export interface CourseFilters {
   search?: string
   categoryId?: number
-  level?: 'BEGINNER' | 'INTERMEDIATE' | 'ADVANCED'
+  level?: 'BEGINNER' | 'INTERMEDIATE' | 'ADVANCED' | 'EXPERT'
   minPrice?: number
   maxPrice?: number
   published?: boolean
@@ -34,27 +34,44 @@ export const courseApi = {
 
   // Get course by ID
   getCourseById: async (id: number): Promise<Course> => {
-    const response = await api.get<Course>(`/courses/${id}`)
-    return response.data
+    const response = await api.get<ApiResponse<Course>>(`/courses/${id}`)
+    return response.data.data
   },
 
   // Get featured courses
   getFeaturedCourses: async (size: number = 6): Promise<Course[]> => {
-    const response = await api.get<PaginatedResponse<Course>>(`/courses?published=true&size=${size}&sort=enrollmentCount,desc`)
+    const response = await api.get<PaginatedResponse<Course>>(`/courses?published=true&size=${size}&sort=createdAt,desc`)
     return response.data.content
+  },
+
+  // Get course modules
+  getCourseModules: async (courseId: number): Promise<Module[]> => {
+    const response = await api.get<ApiResponse<Module[]>>(`/courses/${courseId}/modules`)
+    return response.data.data
+  },
+
+  // Get course reviews
+  getCourseReviews: async (courseId: number, page: number = 0, size: number = 10): Promise<PaginatedResponse<Review>> => {
+    const response = await api.get<PaginatedResponse<Review>>(`/reviews?courseId=${courseId}&page=${page}&size=${size}`)
+    return response.data
+  },
+
+  // Enroll in course
+  enrollInCourse: async (courseId: number): Promise<void> => {
+    await api.post(`/enrollments`, { courseId })
   },
 }
 
 export const categoryApi = {
   // Get all categories
   getCategories: async (): Promise<Category[]> => {
-    const response = await api.get<Category[]>('/categories')
-    return response.data
+    const response = await api.get<ApiResponse<Category[]>>('/categories')
+    return response.data.data
   },
 
   // Get category by ID
   getCategoryById: async (id: number): Promise<Category> => {
-    const response = await api.get<Category>(`/categories/${id}`)
-    return response.data
+    const response = await api.get<ApiResponse<Category>>(`/categories/${id}`)
+    return response.data.data
   },
 }

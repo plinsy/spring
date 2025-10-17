@@ -3,8 +3,10 @@ package com.skillhub.controller;
 import com.skillhub.dto.ApiResponse;
 import com.skillhub.dto.CourseDto;
 import com.skillhub.dto.CreateCourseRequest;
+import com.skillhub.dto.ModuleDto;
 import com.skillhub.entity.User;
 import com.skillhub.service.CourseService;
+import com.skillhub.service.ModuleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,6 +29,7 @@ import java.util.List;
 public class CourseController {
 
     private final CourseService courseService;
+    private final ModuleService moduleService;
 
     @PostMapping
     @SecurityRequirement(name = "bearer-jwt")
@@ -147,5 +150,12 @@ public class CourseController {
             @AuthenticationPrincipal User user) {
         courseService.deleteCourse(id, user);
         return ResponseEntity.ok(ApiResponse.success("Course deleted successfully", null));
+    }
+
+    @GetMapping("/{id}/modules")
+    @Operation(summary = "Get course modules", description = "Get all modules for a course with their lessons")
+    public ResponseEntity<ApiResponse<List<ModuleDto>>> getCourseModules(@PathVariable Long id) {
+        List<ModuleDto> modules = moduleService.getModulesByCourseId(id);
+        return ResponseEntity.ok(ApiResponse.success("Course modules retrieved successfully", modules));
     }
 }

@@ -25,9 +25,9 @@ export default function CourseCard({ course }: CourseCardProps) {
     >
       {/* Thumbnail */}
       <div className="relative h-48 bg-gradient-to-br from-blue-500 to-purple-600 overflow-hidden">
-        {course.thumbnail ? (
+        {course.thumbnailUrl ? (
           <img
-            src={course.thumbnail}
+            src={course.thumbnailUrl}
             alt={course.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
@@ -54,7 +54,7 @@ export default function CourseCard({ course }: CourseCardProps) {
       <div className="p-4">
         {/* Category */}
         <div className="text-sm text-blue-600 font-medium mb-2">
-          {course.category.name}
+          {course.categories[0].name}
         </div>
 
         {/* Title */}
@@ -86,10 +86,10 @@ export default function CourseCard({ course }: CourseCardProps) {
                 <span className="font-medium">{course.averageRating.toFixed(1)}</span>
               </div>
             )}
-            {course.enrollmentCount !== undefined && (
+            {course.totalEnrollments !== undefined && (
               <div className="flex items-center gap-1">
                 <Users className="w-4 h-4" />
-                <span>{course.enrollmentCount}</span>
+                <span>{course.totalEnrollments}</span>
               </div>
             )}
             {course.duration && (
