@@ -44,6 +44,7 @@ export interface Course {
   totalEnrollments?: number
   totalModules?: number
   totalLessons?: number
+  totalReviews?: number
   createdAt: string
   updatedAt: string
 }

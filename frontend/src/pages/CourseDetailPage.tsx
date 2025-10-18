@@ -15,6 +15,7 @@ import {
 } from 'lucide-react'
 import { courseApi } from '../services/courseService'
 import { useAuthStore } from '../store/authStore'
+import CourseReviews from '../components/CourseReviews'
 import type { Course, Module } from '../types'
 
 export default function CourseDetailPage() {
@@ -338,6 +339,16 @@ export default function CourseDetailPage() {
               <div className="prose max-w-none text-gray-700">
                 <p>{course.description}</p>
               </div>
+            </div>
+
+            {/* Reviews Section */}
+            <div className="bg-white rounded-lg shadow p-6">
+              <CourseReviews 
+                courseId={course.id} 
+                averageRating={course.averageRating || 0}
+                totalReviews={course.totalReviews || 0}
+                canReview={!!user && user.role === 'STUDENT'}
+              />
             </div>
           </div>
 

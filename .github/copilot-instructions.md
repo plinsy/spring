@@ -44,7 +44,8 @@ spring/
 │   │   ├── components/     # Reusable UI components
 │   │   │   ├── ui/        # Base UI components (Alert)
 │   │   │   ├── Layout.tsx
-│   │   │   └── Navbar.tsx
+│   │   │   ├── Navbar.tsx
+│   │   │   └── CourseReviews.tsx
 │   │   ├── pages/         # Page components
 │   │   │   ├── HomePage.tsx
 │   │   │   ├── LoginPage.tsx
@@ -256,6 +257,21 @@ spring/
 - Shows different links for authenticated/unauthenticated users
 - Uses `getDashboardRoute()` for role-based dashboard navigation
 
+**CourseReviews.tsx** - Course review and rating component
+- Integrated into CourseDetailPage
+- Star rating display and input (1-5 stars)
+- Write/submit review form with validation
+- Review list with sorting options (Recent, Helpful, Rating)
+- Filter reviews by star rating
+- Rating distribution visualization with bar charts
+- Average rating display
+- Mark reviews as helpful (upvote)
+- Delete own reviews
+- Report inappropriate reviews
+- Empty states for no reviews
+- Responsive design with avatars
+- Mock data with 5 sample reviews
+
 **Alert Component** - Notification system with variants
 - `default` - Blue info alert
 - `destructive` - Red error alert
@@ -279,6 +295,12 @@ spring/
 **CoursesPage** - Course catalog with search and filters
 
 **CourseDetailPage** - Detailed course view with enrollment
+- Detailed course information
+- Course curriculum display
+- Instructor information
+- Enrollment button
+- **Integrated review and rating section**
+- Module and lesson breakdown
 
 **DashboardPage (Student)** - Student dashboard
 - Enrolled courses with progress
@@ -414,6 +436,7 @@ spring/
 ✅ Lesson player with video support
 ✅ Progress tracking and lesson completion
 ✅ Quiz taking functionality with timer and results
+✅ Review and rating system
 ✅ User profile management
 ✅ Admin dashboard with user and course management
 ✅ Responsive UI with Tailwind CSS
@@ -430,7 +453,7 @@ spring/
 🔲 Quiz creation interface (for instructors)
 🔲 Assignment functionality
 🔲 Certificate generation (backend)
-🔲 Review and rating system
+🔲 Review and rating backend integration
 🔲 Payment integration
 🔲 File upload for course materials
 🔲 Email notifications
